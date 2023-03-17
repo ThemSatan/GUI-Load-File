@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -12,6 +13,7 @@ public class Demo extends JFrame {
     private JPanel panelMain;
     private JButton loadButton;
     private JTextArea textArea;
+    private JButton unloadButton;
     public File selectedFile;
 
     String line;
@@ -26,13 +28,10 @@ public class Demo extends JFrame {
 
             try (Scanner scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader(selectedFile)
-                    )
-            )) {
+                            new FileReader(selectedFile)))) {
                 while (scanner.hasNextLine()) {
                     line = scanner.nextLine();
                     parametry += line;
-
                 }
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -46,6 +45,13 @@ public class Demo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 FileReader();
                 textArea.append(parametry + "\n");
+            }
+        });
+
+        unloadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("");
             }
         });
     }
